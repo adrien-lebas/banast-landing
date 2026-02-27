@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Banast — Strategic OS for Vibe Coders</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAFAF9;
+    --surface: #FFFFFF;
+    --sidebar: #F5F5F3;
+    --hover: #EEEEEC;
+    --border: #E5E5E3;
+    --text-primary: #1A1A19;
+    --text-secondary: #6B6B69;
+    --text-tertiary: #9B9B99;
+    --accent: #2563EB;
+    --accent-bg: #EFF6FF;
+    --green: #16A34A;
+    --serif: 'Newsreader', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-md: 0 2px 8px rgba(0,0,0,0.06);
+    --radius-sm: 6px;
+    --radius-md: 8px;
+    --transition: 150ms ease;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: var(--sans);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    height: 52px; padding: 0 3rem;
+    display: flex; justify-content: space-between; align-items: center;
+    backdrop-filter: blur(20px);
+    background: rgba(250,250,249,0.85);
+    border-bottom: 1px solid var(--border);
+  }
+  .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .logo-mark {
+    width: 28px; height: 28px; background: var(--text-primary); border-radius: 5px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 14px; font-weight: 500; color: white;
+  }
+  .logo-text { font-family: var(--sans); font-size: 1rem; font-weight: 600; color: var(--text-primary); }
+  .nav-cta {
+    padding: 6px 18px; background: var(--text-primary); color: white; border: none;
+    border-radius: var(--radius-sm); font-family: var(--sans); font-size: 0.82rem;
+    font-weight: 600; cursor: pointer; transition: all var(--transition); text-decoration: none;
+  }
+  .nav-cta:hover { background: #333332; box-shadow: var(--shadow-sm); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh; display: flex; flex-direction: column;
+    justify-content: center; align-items: center; text-align: center; padding: 2rem;
+  }
+  .hero-tag {
+    font-family: var(--mono); font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.08em; color: var(--accent); background: var(--accent-bg);
+    padding: 5px 14px; border-radius: 10px; border: 1px solid rgba(37,99,235,0.15);
+    margin-bottom: 2rem; opacity: 0; animation: fadeUp 0.7s 0.2s forwards;
+  }
+  .hero h1 {
+    font-family: var(--serif); font-size: clamp(2.6rem, 6vw, 4.8rem); font-weight: 500;
+    line-height: 1.08; letter-spacing: -0.025em; color: var(--text-primary);
+    max-width: 720px; opacity: 0; animation: fadeUp 0.7s 0.4s forwards;
+  }
+  .hero h1 em { font-style: italic; color: var(--accent); }
+  .hero-sub {
+    font-size: 1.1rem; color: var(--text-secondary); max-width: 460px;
+    margin-top: 1.5rem; line-height: 1.65; opacity: 0; animation: fadeUp 0.7s 0.6s forwards;
+  }
+  .hero-scroll {
+    margin-top: 3.5rem; display: flex; flex-direction: column;
+    align-items: center; gap: 8px; opacity: 0; animation: fadeUp 0.7s 0.9s forwards;
+  }
+  .hero-scroll span {
+    font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--text-tertiary);
+  }
+  .scroll-line {
+    width: 1px; height: 44px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+    animation: scrollPulse 2.2s infinite;
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.15); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── GOLDEN CIRCLE ── */
+  .gc-section { position: relative; min-height: 550vh; }
+  .gc-sticky {
+    position: sticky; top: 0; height: 100vh;
+    display: flex; justify-content: center; align-items: center; overflow: hidden;
+  }
+  /* Large screens (1440p+) */
+  .gc-container { position: relative; width: 850px; height: 850px; }
+
+  .gc-ring {
+    position: absolute; border-radius: 50%;
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s;
+  }
+  .gc-ring-3 {
+    width: 100%; height: 100%; top: 0; left: 0;
+    background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow-sm);
+    opacity: 0; transform: scale(0.85);
+  }
+  .gc-ring-2 {
+    width: 56.5%; height: 56.5%; top: 21.75%; left: 21.75%;
+    background: var(--sidebar); border: 1px solid var(--border);
+    opacity: 0; transform: scale(0.85);
+  }
+  .gc-ring-1 {
+    width: 23.5%; height: 23.5%; top: 38.25%; left: 38.25%;
+    background: var(--text-primary);
+    opacity: 0; transform: scale(0.5);
+  }
+  .gc-ring.visible { opacity: 1; transform: scale(1); }
+
+  /* Core text */
+  .gc-core-text {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    text-align: center; z-index: 10; opacity: 0; transition: opacity 0.8s; width: 160px;
+  }
+  .gc-core-text.visible { opacity: 1; }
+  .gc-core-text h2 {
+    font-family: var(--serif); font-size: 1rem; font-weight: 400;
+    line-height: 1.4; color: white;
+  }
+  .gc-core-text h2 span { font-weight: 600; }
+
+  /* Phase indicator */
+  .gc-phase {
+    position: absolute; bottom: 50px; left: 50%; transform: translateX(-50%);
+    text-align: center; opacity: 0; transition: opacity 0.5s; z-index: 20;
+  }
+  .gc-phase.visible { opacity: 1; }
+  .gc-phase-step {
+    font-family: var(--mono); font-size: 0.65rem; text-transform: uppercase;
+    letter-spacing: 0.15em; color: var(--accent); margin-bottom: 4px;
+  }
+  .gc-phase-title { font-family: var(--serif); font-size: 1.35rem; font-weight: 500; color: var(--text-primary); }
+  .gc-phase-desc { font-size: 0.82rem; color: var(--text-secondary); margin-top: 4px; max-width: 380px; line-height: 1.5; }
+
+  /* Progress dots */
+  .gc-progress {
+    position: absolute; right: 36px; top: 50%; transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 10px; z-index: 20;
+  }
+  .gc-dot {
+    width: 7px; height: 7px; border-radius: 50%; background: var(--border); transition: all 0.3s;
+  }
+  .gc-dot.active { background: var(--accent); box-shadow: 0 0 8px rgba(37,99,235,0.3); }
+
+  /* Items layer */
+  .gc-rotating-items {
+    position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 5;
+  }
+
+  /* Ring 2 action labels — plain text, no card */
+  .gc-action-item {
+    position: absolute; opacity: 0;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    transform: translate(-50%, -50%) scale(0.9);
+    z-index: 6;
+  }
+  .gc-action-item.visible {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  .gc-action-text {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--text-secondary);
+    white-space: nowrap;
+  }
+
+  /* Ring 3 module badges */
+  .gc-module-item {
+    position: absolute; opacity: 0;
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translate(-50%, -50%) scale(0.8);
+    z-index: 5;
+  }
+  .gc-module-item.visible {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  .gc-module-text {
+    font-family: var(--sans);
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    white-space: nowrap;
+  }
+  .gc-module-text.accent {
+    color: var(--accent);
+  }
+
+  /* Orbit dot on ring 2 border */
+  .gc-orbit-dot {
+    position: absolute;
+    width: 10px; height: 10px;
+    background: var(--accent);
+    border-radius: 50%;
+    z-index: 15;
+    opacity: 0;
+    transition: opacity 0.4s;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 12px rgba(37,99,235,0.5), 0 0 24px rgba(37,99,235,0.2);
+    pointer-events: none;
+  }
+  .gc-orbit-dot.visible { opacity: 1; }
+  .gc-orbit-dot::after {
+    content: '';
+    position: absolute;
+    top: -4px; left: -4px;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(37,99,235,0.25);
+    animation: dotPing 1.5s ease-out infinite;
+  }
+  @keyframes dotPing {
+    0% { transform: scale(1); opacity: 0.6; }
+    100% { transform: scale(2); opacity: 0; }
+  }
+
+  /* ── FLOW DIAGRAM ── */
+  .flow-section {
+    position: relative; min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    padding: 4rem 2rem;
+  }
+
+  .flow-header {
+    text-align: center; margin-bottom: 2.5rem;
+    opacity: 0; transform: translateY(16px);
+    transition: opacity 0.7s, transform 0.7s;
+  }
+  .flow-header.visible { opacity: 1; transform: translateY(0); }
+  .flow-header h2 {
+    font-family: var(--serif); font-size: 1.8rem; font-weight: 500;
+    color: var(--text-primary); margin-bottom: 0.5rem;
+  }
+  .flow-header h2 em { font-style: italic; color: var(--accent); }
+  .flow-header p {
+    font-size: 0.9rem; color: var(--text-secondary); max-width: 480px;
+    margin: 0 auto; line-height: 1.6;
+  }
+
+  .flow-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 48px 56px;
+    box-shadow: var(--shadow-md);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .flow-canvas {
+    position: relative; width: 940px; height: 310px;
+  }
+
+  .flow-node {
+    position: absolute; display: flex; flex-direction: column;
+    align-items: flex-start; justify-content: center;
+    opacity: 0; transform: translateY(8px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    z-index: 2;
+  }
+  .flow-node.visible { opacity: 1; transform: translateY(0); }
+
+  .flow-box {
+    padding: 12px 28px; border-radius: var(--radius-md);
+    font-family: var(--sans); font-size: 0.85rem; font-weight: 600;
+    white-space: nowrap; text-align: center;
+  }
+  .flow-box.dark { background: var(--text-primary); color: white; }
+  .flow-box.light { background: var(--surface); color: var(--text-primary); border: 1px solid var(--border); }
+  .flow-box.accent-box { background: var(--accent-bg); color: var(--accent); border: 1px solid rgba(37,99,235,0.2); }
+
+  .flow-input-label {
+    font-family: var(--serif); font-style: italic; font-size: 0.82rem;
+    color: var(--text-secondary); line-height: 1.3;
+  }
+
+  .flow-edge-label {
+    position: absolute; font-family: var(--mono); font-size: 0.65rem;
+    color: var(--text-tertiary); white-space: nowrap;
+    opacity: 0; transition: opacity 0.6s ease;
+    z-index: 2;
+  }
+  .flow-edge-label.visible { opacity: 1; }
+
+  .flow-svg {
+    position: absolute; top: 0; left: 0; width: 940px; height: 310px;
+    pointer-events: none; z-index: 1; overflow: visible;
+  }
+  .flow-svg path {
+    fill: none; stroke: var(--text-primary); stroke-width: 1.5;
+    stroke-linecap: round;
+  }
+
+  .flow-particle {
+    position: absolute; width: 6px; height: 6px;
+    background: var(--accent); border-radius: 50%;
+    opacity: 0; pointer-events: none; z-index: 10;
+    box-shadow: 0 0 8px rgba(37,99,235,0.4);
+    transform: translate(-50%, -50%);
+  }
+
+  @media (max-width: 1100px) {
+    .flow-card { padding: 32px 24px; }
+    .flow-canvas { transform: scale(0.55); transform-origin: center center; height: 180px; }
+  }
+  /* ── PERSONAS ── */
+  .persona-section {
+    padding: 6rem 2rem; display: flex; flex-direction: column; align-items: center;
+  }
+  .persona-section h2 {
+    font-family: var(--serif); font-size: clamp(1.6rem, 3.5vw, 2.2rem); font-weight: 500;
+    color: var(--text-primary); text-align: center; margin-bottom: 0.5rem;
+  }
+  .persona-section h2 em { font-style: italic; color: var(--accent); }
+  .persona-sub {
+    color: var(--text-secondary); font-size: 0.95rem; text-align: center;
+    max-width: 460px; margin-bottom: 3rem; line-height: 1.6;
+  }
+  .persona-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem; max-width: 900px; width: 100%;
+  }
+  .persona-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 2rem 1.75rem;
+    transition: all 0.25s ease;
+  }
+  .persona-card:hover {
+    border-color: rgba(37,99,235,0.25);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+    transform: translateY(-2px);
+  }
+  .persona-card h3 {
+    font-family: var(--serif); font-size: 1.25rem; font-weight: 500;
+    color: var(--text-primary); margin-bottom: 0.75rem;
+    letter-spacing: -0.01em;
+  }
+  .persona-card h3 em {
+    font-style: italic; color: var(--accent);
+  }
+  .persona-card p {
+    font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;
+  }
+  @media (max-width: 700px) {
+    .persona-grid { grid-template-columns: 1fr; max-width: 360px; }
+  }
+
+  .cta-section {
+    min-height: 100vh; display: flex; flex-direction: column;
+    justify-content: center; align-items: center; text-align: center; padding: 4rem 2rem;
+  }
+  .cta-section h2 {
+    font-family: var(--serif); font-size: clamp(2rem, 4.5vw, 3.2rem); font-weight: 500;
+    line-height: 1.12; letter-spacing: -0.02em; color: var(--text-primary);
+    max-width: 520px; margin-bottom: 1rem;
+  }
+  .cta-section h2 em { font-style: italic; color: var(--accent); }
+  .cta-section .cta-sub {
+    color: var(--text-secondary); font-size: 1rem; max-width: 400px;
+    margin-bottom: 2.5rem; line-height: 1.65;
+  }
+  .email-form {
+    display: flex; max-width: 440px; width: 100%;
+    border-radius: var(--radius-md); overflow: hidden;
+    border: 1px solid var(--border); background: var(--surface);
+    box-shadow: var(--shadow-sm); transition: all var(--transition);
+  }
+  .email-form:focus-within {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.1), var(--shadow-sm);
+  }
+  .email-form input {
+    flex: 1; padding: 12px 16px; background: transparent; border: none;
+    color: var(--text-primary); font-family: var(--sans); font-size: 0.9rem; outline: none;
+  }
+  .email-form input::placeholder { color: var(--text-tertiary); }
+  .email-form button {
+    padding: 12px 22px; background: var(--text-primary); color: white; border: none;
+    font-family: var(--sans); font-size: 0.85rem; font-weight: 600;
+    cursor: pointer; transition: all var(--transition); white-space: nowrap;
+  }
+  .email-form button:hover { background: #333332; }
+  .form-success { display: none; color: var(--green); font-size: 0.88rem; font-weight: 500; margin-top: 1rem; }
+  .form-success.show { display: flex; align-items: center; gap: 6px; }
+  .cta-trust { margin-top: 1.2rem; font-size: 0.72rem; color: var(--text-tertiary); }
+
+  footer {
+    padding: 2.5rem 3rem; text-align: center;
+    border-top: 1px solid var(--border); color: var(--text-tertiary); font-size: 0.75rem;
+  }
+
+  /* Laptop screens (height ≤ 900px, e.g. MacBook 13/14") */
+  @media (max-height: 900px) {
+    .gc-container { width: 580px; height: 580px; }
+    .gc-core-text { width: 120px; }
+    .gc-core-text h2 { font-size: 0.78rem; }
+    .gc-action-text { font-size: 0.72rem; }
+    .gc-module-text { font-size: 0.65rem; }
+    .gc-phase-title { font-size: 1.1rem; }
+    .gc-phase-desc { font-size: 0.75rem; }
+    .gc-phase-step { font-size: 0.58rem; }
+  }
+
+  /* Small laptops (height ≤ 750px) */
+  @media (max-height: 750px) {
+    .gc-container { width: 480px; height: 480px; }
+    .gc-core-text { width: 100px; }
+    .gc-core-text h2 { font-size: 0.68rem; }
+    .gc-action-text { font-size: 0.65rem; }
+    .gc-module-text { font-size: 0.58rem; }
+    .gc-phase-title { font-size: 1rem; }
+    .gc-phase-desc { font-size: 0.7rem; }
+  }
+
+  @media (max-width: 900px) {
+    .gc-section { display: none; }
+    nav { padding: 0 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo">
+    <div class="logo-mark">b.</div>
+    <span class="logo-text">banast</span>
+  </a>
+  <a href="#demo" class="nav-cta">Access the demo</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-tag">Strategic OS for Vibe Coders</div>
+  <h1>Build the <em>right</em> product,<br>not just the fast one.</h1>
+  <p class="hero-sub">Banast helps tomorrow's founders structure their product vision before coding with AI.</p>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<section class="gc-section">
+  <div class="gc-sticky">
+    <div class="gc-progress">
+      <div class="gc-dot active"></div>
+      <div class="gc-dot"></div>
+      <div class="gc-dot"></div>
+      <div class="gc-dot"></div>
+    </div>
+    <div class="gc-phase" id="gcPhase">
+      <div class="gc-phase-step"></div>
+      <div class="gc-phase-title"></div>
+      <div class="gc-phase-desc"></div>
+    </div>
+    <div class="gc-container" id="gcContainer">
+      <div class="gc-ring gc-ring-3" id="ring3"></div>
+      <div class="gc-ring gc-ring-2" id="ring2"></div>
+      <div class="gc-ring gc-ring-1" id="ring1"></div>
+      <div class="gc-core-text" id="coreText">
+        <h2><span>Banast</span> helps founders build their dream project.</h2>
+      </div>
+      <div class="gc-rotating-items" id="rotatingItems"></div>
+      <div class="gc-orbit-dot" id="orbitDot"></div>
+      <div class="gc-orbit-dot" id="orbitDot3"></div>
+    </div>
+  </div>
+</section>
+
+<!-- FLOW DIAGRAM -->
+<section class="flow-section" id="flowSection">
+    <div class="flow-card">
+      <div class="flow-header" id="flowHeader">
+        <h2>From chaos to <em>perfect context</em></h2>
+        <p>Banast turns your messy inputs into structured specs that AI coding tools actually understand — then learns from what you build.</p>
+      </div>
+      <div class="flow-canvas" id="flowCanvas">
+        <svg class="flow-svg" id="flowSvg" width="940" height="310">
+          <!-- Input curves → Banast left edge (x=220) at y=150 center -->
+          <path id="fLine1" d="M 130,55 C 175,55 200,140 220,148"/>
+          <path id="fLine2" d="M 130,150 L 220,150"/>
+          <path id="fLine3" d="M 130,250 C 175,250 200,160 220,152"/>
+
+          <!-- Banast right (335) → AI tool left (480) -->
+          <path id="fLine4" d="M 335,150 L 480,150"/>
+
+          <!-- AI tool right (670) → App left (780) -->
+          <path id="fLine5" d="M 670,150 L 780,150"/>
+
+          <!-- Feedback: App bottom center (840,172) → Banast bottom center (278,172) -->
+          <path id="fLine6" d="M 840,172 C 840,280 278,280 278,172"/>
+        </svg>
+
+        <!-- Input labels — all left-aligned at same x -->
+        <div class="flow-node" id="fInput1" style="left:10px; top:40px; align-items:flex-end">
+          <span class="flow-input-label">Your ideas</span>
+        </div>
+        <div class="flow-node" id="fInput2" style="left:10px; top:130px; align-items:flex-end">
+          <span class="flow-input-label">Your<br>documentation</span>
+        </div>
+        <div class="flow-node" id="fInput3" style="left:10px; top:237px; align-items:flex-end">
+          <span class="flow-input-label">Your website</span>
+        </div>
+
+        <!-- Edge labels -->
+        <div class="flow-edge-label" id="fLabel2" style="left:370px; top:124px">perfect context</div>
+        <div class="flow-edge-label" id="fLabel3" style="left:490px; top:268px">code</div>
+        <div class="flow-edge-label" id="fLabel4" style="left:590px; top:268px">user data</div>
+
+        <!-- Boxes -->
+        <div class="flow-node" id="fBanast" style="left:220px; top:128px">
+          <div class="flow-box dark">Banast</div>
+        </div>
+        <div class="flow-node" id="fAI" style="left:480px; top:128px">
+          <div class="flow-box light">Your AI coding tool</div>
+        </div>
+        <div class="flow-node" id="fApp" style="left:780px; top:128px">
+          <div class="flow-box accent-box">Your app</div>
+        </div>
+
+        <div id="flowParticles"></div>
+      </div>
+    </div>
+</section>
+
+<!-- PERSONAS -->
+<section class="persona-section">
+  <h2>Built for <em>builders</em></h2>
+  <p class="persona-sub">Whether you code alone or lead a team, Banast gives you the strategic clarity to build what matters.</p>
+  <div class="persona-grid">
+    <div class="persona-card">
+      <h3><em>Solo</em> Founders</h3>
+      <p>You move fast with AI coding tools but keep rebuilding the wrong thing. Banast structures your vision so every prompt counts.</p>
+    </div>
+    <div class="persona-card">
+      <h3><em>Product</em> Managers</h3>
+      <p>Your team ships features without a clear strategy. Banast bridges the gap between user needs and what actually gets built.</p>
+    </div>
+    <div class="persona-card">
+      <h3><em>Startup</em> Leaders</h3>
+      <p>You need product decisions grounded in data, not gut feelings. Banast gives your small team the strategic rigor of a full PM org.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section" id="demo">
+  <h2>Ready to build<br><em>with method</em>?</h2>
+  <p class="cta-sub">Access the Banast demo and structure your next product before writing the first line of code.</p>
+  <form class="email-form" id="emailForm">
+    <input type="email" placeholder="your@email.com" required>
+    <button type="submit">Access the demo →</button>
+  </form>
+  <div class="form-success" id="formSuccess">✓ Thanks! You'll receive your access very soon.</div>
+  <p class="cta-trust">No spam. Early access reserved for first subscribers.</p>
+</section>
+
+<footer><p>© 2026 Banast. Building the future of product strategy.</p></footer>
+
+<script>
+// ── DATA ──
+const actions = [
+  { text: 'Learn the needs', angle: -90 },
+  { text: 'Define', angle: -30 },
+  { text: 'Analyze opportunities', angle: 30 },
+  { text: 'Find solutions', angle: 90 },
+  { text: 'Prioritize', angle: 150 },
+  { text: 'Lead to launch', angle: 210 },
+];
+
+const modules = [
+  // Cluster: Learn the needs (-90°)
+  { text: 'User Data', angle: -110, dist: 0.88 },
+  { text: 'Code Analysis', angle: -96, dist: 1.0 },
+  { text: 'Documentation', angle: -78, dist: 1.0 },
+  { text: 'Notion', angle: -66, dist: 0.88 },
+  // Cluster: Define (-30°)
+  { text: 'Market Analysis', angle: -44, dist: 1.0, accent: true },
+  { text: 'User Research', angle: -30, dist: 0.88 },
+  { text: 'Positioning', angle: -16, dist: 1.0 },
+  // Cluster: Analyze opportunities (30°)
+  { text: 'AI Chat', angle: 16, dist: 0.88, accent: true },
+  { text: 'Distribution', angle: 30, dist: 1.0 },
+  { text: 'Feature Audit', angle: 44, dist: 0.88, accent: true },
+  // Cluster: Find solutions (90°)
+  { text: 'Idea Generation', angle: 72, dist: 1.0 },
+  { text: 'Specifications', angle: 84, dist: 0.88 },
+  { text: 'Tech Feasibility', angle: 96, dist: 1.0 },
+  { text: 'Gap Analysis', angle: 108, dist: 0.88 },
+  // Cluster: Prioritize (150°)
+  { text: 'Assess Impact', angle: 136, dist: 1.0 },
+  { text: 'Objectives', angle: 150, dist: 0.88 },
+  { text: 'Roadmap', angle: 164, dist: 1.0, accent: true },
+  // Cluster: Lead to launch (210°)
+  { text: 'Context Export', angle: 198, dist: 1.0, accent: true },
+  { text: 'MCP Integration', angle: 218, dist: 0.88, accent: true },
+];
+
+const phases = [
+  { step: 'Why', title: 'The Mission', desc: "Help tomorrow's founders build their dream project." },
+  { step: 'How', title: 'The Process', desc: 'A strategic cycle to go from idea to launch.' },
+  { step: 'What', title: 'The Modules', desc: 'Concrete tools for every step of your product thinking.' },
+];
+
+// ── ELEMENTS ──
+const gcSection = document.querySelector('.gc-section');
+const container = document.getElementById('gcContainer');
+const rotatingItems = document.getElementById('rotatingItems');
+const gcPhase = document.getElementById('gcPhase');
+const dots = document.querySelectorAll('.gc-dot');
+
+let actionEls = [];
+let moduleEls = [];
+
+// ── CREATE ELEMENTS ──
+actions.forEach(a => {
+  const el = document.createElement('div');
+  el.className = 'gc-action-item';
+  el.innerHTML = `<span class="gc-action-text">${a.text}</span>`;
+  rotatingItems.appendChild(el);
+  actionEls.push({ el, angle: a.angle });
+});
+
+modules.forEach(m => {
+  const el = document.createElement('div');
+  el.className = 'gc-module-item';
+  el.innerHTML = `<span class="gc-module-text ${m.accent ? 'accent' : ''}">${m.text}</span>`;
+  rotatingItems.appendChild(el);
+  moduleEls.push({ el, angle: m.angle, dist: m.dist || 1 });
+});
+
+// ── POSITIONING ──
+function posOnRing(angleDeg, radius, size) {
+  const rad = angleDeg * Math.PI / 180;
+  return {
+    x: size / 2 + radius * Math.cos(rad),
+    y: size / 2 + radius * Math.sin(rad),
+  };
+}
+
+function layoutAll() {
+  const size = container.offsetWidth;
+  // Ring 2 actions: midpoint between ring1 edge (100px) and ring2 edge (240px) = 170px on 850 → 0.20
+  const ring2Radius = size * 0.20;
+
+  actionEls.forEach(a => {
+    const pos = posOnRing(a.angle, ring2Radius, size);
+    a.el.style.left = pos.x + 'px';
+    a.el.style.top = pos.y + 'px';
+  });
+
+  // Ring 3 modules: between ring2 edge and ring3 edge
+  // ring2 outer = 240px, ring3 outer = 425px → midpoint ~330px on 850 → 0.39
+  const ring3Radius = size * 0.39;
+  moduleEls.forEach(m => {
+    const pos = posOnRing(m.angle, ring3Radius * m.dist, size);
+    m.el.style.left = pos.x + 'px';
+    m.el.style.top = pos.y + 'px';
+  });
+}
+
+// ── SCROLL ──
+function onScroll() {
+  const rect = gcSection.getBoundingClientRect();
+  const total = gcSection.offsetHeight - window.innerHeight;
+  const scrolled = -rect.top;
+  const progress = Math.max(0, Math.min(1, scrolled / total));
+
+  // Phases: 0=core(0-0.12), 1=actions(0.12-0.45), 2=transition(0.45-0.55), 3=modules(0.55-1)
+  let phase;
+  if (progress < 0.12) phase = 0;
+  else if (progress < 0.50) phase = 1;
+  else if (progress < 0.58) phase = 2;
+  else phase = 3;
+
+  dots.forEach((d, i) => d.classList.toggle('active', i <= phase));
+
+  // Ring 1 — always visible once started
+  const ring1 = document.getElementById('ring1');
+  const coreText = document.getElementById('coreText');
+  ring1.classList.toggle('visible', phase >= 0);
+  coreText.classList.toggle('visible', phase >= 0);
+
+  // Ring 2 — visible from phase 1
+  const ring2 = document.getElementById('ring2');
+  ring2.classList.toggle('visible', phase >= 1);
+
+  // Actions: reveal one by one, orbit dot follows along ring2 border
+  const orbitDot = document.getElementById('orbitDot');
+  if (phase >= 1 && phase < 2) {
+    const p1Start = 0.12, p1End = 0.50;
+    const p1Progress = Math.max(0, Math.min(1, (progress - p1Start) / (p1End - p1Start)));
+
+    const actionAngles = actionEls.map(a => a.angle); // [-90, -30, 30, 90, 150, 210]
+    const totalStops = actionAngles.length; // 6
+
+    // Map progress 0-1 across all 6 stops (0=first, 5=last)
+    // We want the dot to reach stop 5 (210°) at progress=1
+    const continuousIdx = p1Progress * (totalStops - 1); // 0 to 5
+    const currentStop = Math.min(Math.floor(continuousIdx), totalStops - 2);
+    const nextStop = currentStop + 1;
+    const t = continuousIdx - currentStop;
+
+    // Interpolate angle
+    const dotAngle = actionAngles[currentStop] + (actionAngles[nextStop] - actionAngles[currentStop]) * t;
+
+    // Position dot on ring2 border (same radius as actions)
+    const size = container.offsetWidth;
+    const dotRadius = size * 0.283; // ring2 outer border (240/850)
+    const dotPos = posOnRing(dotAngle, dotRadius, size);
+    orbitDot.style.left = dotPos.x + 'px';
+    orbitDot.style.top = dotPos.y + 'px';
+    orbitDot.classList.add('visible');
+
+    // Show action when dot is at or past its angle
+    const revealIdx = Math.round(continuousIdx);
+    actionEls.forEach((a, i) => a.el.classList.toggle('visible', i <= revealIdx));
+  } else {
+    if (phase >= 2) {
+      orbitDot.classList.remove('visible');
+      actionEls.forEach(a => a.el.classList.add('visible'));
+    } else {
+      orbitDot.classList.remove('visible');
+      actionEls.forEach(a => a.el.classList.remove('visible'));
+    }
+  }
+
+  // Ring 3 — visible from phase 2
+  const ring3 = document.getElementById('ring3');
+  ring3.classList.toggle('visible', phase >= 2);
+
+  // Modules: reveal one by one with orbit dot doing full 360° on ring3 border
+  const orbitDot3 = document.getElementById('orbitDot3');
+  if (phase >= 2) {
+    const p3Start = 0.50, p3End = 1.0;
+    const p3Progress = Math.max(0, Math.min(1, (progress - p3Start) / (p3End - p3Start)));
+
+    const totalModules = moduleEls.length; // 19
+    const moduleAngles = moduleEls.map(m => m.angle);
+
+    // Add a virtual last stop = first angle + 360° to close the loop
+    const firstAngle = moduleAngles[0]; // -108
+    const loopAngles = [...moduleAngles, firstAngle + 360]; // adds 252° as final target
+    const totalStops = loopAngles.length; // 20
+
+    const continuousIdx = p3Progress * (totalStops - 1);
+    const currentStop = Math.min(Math.floor(continuousIdx), totalStops - 2);
+    const nextStop = currentStop + 1;
+    const t = continuousIdx - currentStop;
+
+    const fromAngle = loopAngles[currentStop];
+    const toAngle = loopAngles[nextStop];
+    const dotAngle = fromAngle + (toAngle - fromAngle) * t;
+
+    // Position dot on ring3 outer border
+    const size = container.offsetWidth;
+    const dot3Radius = size * 0.50; // ring3 outer border (425/850)
+    const dotPos = posOnRing(dotAngle, dot3Radius, size);
+    orbitDot3.style.left = dotPos.x + 'px';
+    orbitDot3.style.top = dotPos.y + 'px';
+    orbitDot3.classList.add('visible');
+
+    // Reveal modules as dot passes (only real modules, not the virtual loop-back)
+    const revealIdx = Math.min(Math.round(continuousIdx), totalModules - 1);
+    moduleEls.forEach((m, i) => m.el.classList.toggle('visible', i <= revealIdx));
+  } else {
+    orbitDot3.classList.remove('visible');
+    moduleEls.forEach(m => m.el.classList.remove('visible'));
+  }
+
+  // Layout (fixed positions)
+  layoutAll();
+
+  // Phase label
+  const pIdx = phase >= 3 ? 2 : phase >= 1 ? 1 : 0;
+  const p = phases[pIdx];
+  gcPhase.classList.add('visible');
+  gcPhase.querySelector('.gc-phase-step').textContent = p.step;
+  gcPhase.querySelector('.gc-phase-title').textContent = p.title;
+  gcPhase.querySelector('.gc-phase-desc').textContent = p.desc;
+}
+
+// ── EMAIL CAPTURE (Google Apps Script) ──
+const GSCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwo1Y7ubLGcL1FQ2_I7Z3A9BC92tkKikr3RY9W9HUg-N4s4f0xMWBQa3oDVgK4T7x0/exec';
+
+document.getElementById('emailForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const input = this.querySelector('input');
+  const btn = this.querySelector('button');
+  const email = input.value;
+  if (!email) return;
+
+  // Loading state
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+
+  try {
+    await fetch(GSCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }),
+    });
+    this.style.display = 'none';
+    document.getElementById('formSuccess').classList.add('show');
+  } catch (err) {
+    btn.textContent = 'Try again →';
+    btn.disabled = false;
+  }
+});
+
+// ── FLOW DIAGRAM — AUTO-PLAY ANIMATION ──
+const flowSection = document.getElementById('flowSection');
+const flowParticles = document.getElementById('flowParticles');
+const allFlowPaths = ['fLine1','fLine2','fLine3','fLine4','fLine5','fLine6'];
+
+// Hide all paths initially
+allFlowPaths.forEach(id => {
+  const p = document.getElementById(id);
+  if (p) {
+    const len = p.getTotalLength();
+    p.setAttribute('stroke-dasharray', len);
+    p.setAttribute('stroke-dashoffset', len);
+  }
+});
+
+// Timed steps: delay in ms from when animation starts
+const flowSteps = [
+  { delay: 200,  lines: ['fLine1','fLine2','fLine3'], nodes: ['fInput1','fInput2','fInput3'], labels: [] },
+  { delay: 1200, lines: [], nodes: ['fBanast'], labels: [] },
+  { delay: 2000, lines: ['fLine4'], nodes: [], labels: ['fLabel2'] },
+  { delay: 3000, lines: [], nodes: ['fAI'], labels: [] },
+  { delay: 3800, lines: ['fLine5'], nodes: [], labels: [] },
+  { delay: 4800, lines: [], nodes: ['fApp'], labels: [] },
+  { delay: 5600, lines: ['fLine6'], nodes: [], labels: ['fLabel3','fLabel4'] },
+];
+
+// Particle system
+let activeParticles = [];
+let particleRAF = null;
+
+function spawnParticlesOnPath(pathId, count) {
+  const pathEl = document.getElementById(pathId);
+  if (!pathEl) return;
+  const len = pathEl.getTotalLength();
+  for (let i = 0; i < count; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'flow-particle';
+    flowParticles.appendChild(dot);
+    activeParticles.push({
+      el: dot, path: pathEl, len,
+      speed: 0.8 + Math.random() * 0.6,
+      born: performance.now() + Math.random() * 400,
+    });
+  }
+}
+
+function animateParticles(now) {
+  activeParticles = activeParticles.filter(p => {
+    const age = now - p.born;
+    if (age < 0) return true;
+    const t = Math.min(age / (p.speed * 1000), 1);
+    if (t >= 1) { p.el.remove(); return false; }
+    const pt = p.path.getPointAtLength(t * p.len);
+    p.el.style.left = pt.x + 'px';
+    p.el.style.top = pt.y + 'px';
+    p.el.style.opacity = Math.sin(t * Math.PI) * 0.7;
+    return true;
+  });
+  if (activeParticles.length > 0) {
+    particleRAF = requestAnimationFrame(animateParticles);
+  } else { particleRAF = null; }
+}
+
+function ensureParticleLoop() {
+  if (!particleRAF) particleRAF = requestAnimationFrame(animateParticles);
+}
+
+let flowStarted = false;
+let drawnPaths = [];
+
+function startFlowAnimation() {
+  if (flowStarted) return;
+  flowStarted = true;
+
+  // Show header
+  document.getElementById('flowHeader').classList.add('visible');
+
+  flowSteps.forEach(step => {
+    setTimeout(() => {
+      // Draw lines
+      step.lines.forEach(id => {
+        const p = document.getElementById(id);
+        if (p) {
+          p.style.transition = 'stroke-dashoffset 0.8s ease';
+          p.style.strokeDashoffset = '0';
+          drawnPaths.push(id);
+          setTimeout(() => { spawnParticlesOnPath(id, 5); ensureParticleLoop(); }, 200);
+        }
+      });
+      // Show nodes
+      step.nodes.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('visible');
+      });
+      // Show labels
+      step.labels.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('visible');
+      });
+    }, step.delay);
+  });
+
+  // Start continuous ambient particles after all steps done
+  setTimeout(() => {
+    setInterval(() => {
+      allFlowPaths.forEach(id => {
+        spawnParticlesOnPath(id, 1);
+      });
+      ensureParticleLoop();
+    }, 1200);
+  }, 7000);
+}
+
+// Trigger when section enters viewport
+const flowObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      startFlowAnimation();
+      flowObserver.disconnect();
+    }
+  });
+}, { threshold: 0.3 });
+flowObserver.observe(flowSection);
+// ── INIT ──
+layoutAll();
+window.addEventListener('scroll', onScroll, { passive: true });
+window.addEventListener('resize', layoutAll);
+onScroll();
+</script>
+</body>
+</html>
