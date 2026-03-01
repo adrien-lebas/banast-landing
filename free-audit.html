@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Landing Page Audit — Banast</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Newsreader:ital,wght@0,400;0,500;0,600;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #FAFAF9;
+            --surface: #FFFFFF;
+            --surface-dim: #F5F5F3;
+            --hover: #EEEEEC;
+            --active: #E8E8E5;
+            --border: #E5E5E3;
+            --border-light: #EFEFED;
+            --text-primary: #1A1A19;
+            --text-secondary: #6B6B69;
+            --text-tertiary: #9B9B99;
+            --red: #DC2626;
+            --red-bg: #FEF2F2;
+            --red-border: #FECACA;
+            --orange: #EA580C;
+            --orange-bg: #FFF7ED;
+            --orange-border: #FED7AA;
+            --yellow: #CA8A04;
+            --yellow-bg: #FEFCE8;
+            --yellow-border: #FDE68A;
+            --green: #16A34A;
+            --green-bg: #F0FDF4;
+            --green-border: #BBF7D0;
+            --blue: #2563EB;
+            --blue-bg: #EFF6FF;
+            --blue-border: #BFDBFE;
+            --violet: #7C3AED;
+            --violet-bg: #F5F3FF;
+            --violet-border: #DDD6FE;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-md: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            height: 52px;
+            padding: 0 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(20px);
+            background: rgba(250, 250, 249, 0.85);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo-mark {
+            width: 28px;
+            height: 28px;
+            background: var(--text-primary);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            font-weight: 500;
+            color: white;
+        }
+
+        .logo-text {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .nav-back {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 150ms ease;
+        }
+
+        .nav-back:hover {
+            color: var(--text-primary);
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 80px 24px 120px;
+        }
+
+        /* Hero */
+        h1 {
+            font-family: 'Newsreader', serif;
+            font-size: clamp(32px, 5.5vw, 44px);
+            font-weight: 500;
+            line-height: 1.2;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            font-size: 17px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 40px;
+            max-width: 540px;
+        }
+
+        /* Form */
+        .form-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 28px;
+        }
+
+        .form-group { margin-bottom: 16px; }
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 14px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 15px;
+            transition: all 150ms ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .form-group input::placeholder { color: var(--text-tertiary); }
+
+        .submit-btn {
+            width: 100%;
+            padding: 13px;
+            margin-top: 4px;
+            background: var(--text-primary);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 150ms ease;
+        }
+
+        .submit-btn:hover {
+            background: #333;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .disclaimer {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            margin-top: 12px;
+            text-align: center;
+        }
+
+        /* Error */
+        .error-msg {
+            display: none;
+            margin-top: 16px;
+            padding: 12px 16px;
+            background: var(--red-bg);
+            border: 1px solid var(--red-border);
+            border-radius: 8px;
+            color: var(--red);
+            font-size: 14px;
+        }
+
+        .error-msg.active { display: block; }
+
+        /* Loading */
+        .loading-section {
+            display: none;
+            margin-top: 32px;
+        }
+
+        .loading-section.active {
+            display: block;
+            animation: fadeUp 0.25s ease;
+        }
+
+        .loading-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .load-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 18px 20px;
+            transition: all 300ms ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+
+        .load-card:hover {
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+        }
+
+        .load-card .lc-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            opacity: 0.5;
+            transition: all 300ms ease;
+        }
+
+        .load-card .lc-icon svg {
+            width: 100%;
+            height: 100%;
+            stroke: var(--text-tertiary);
+            stroke-width: 1.5;
+            fill: none;
+            transition: all 300ms ease;
+        }
+
+        .load-card .lc-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-tertiary);
+            margin-bottom: 6px;
+            letter-spacing: 0.3px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .load-card .lc-status {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            font-family: 'JetBrains Mono', monospace;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Progress bar */
+        .load-card .lc-progress {
+            position: relative;
+            height: 3px;
+            background: rgba(229, 229, 227, 0.5);
+            border-radius: 3px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .load-card .lc-progress-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background: linear-gradient(90deg, var(--blue) 0%, rgba(37, 99, 235, 0.8) 100%);
+            border-radius: 3px;
+            width: 0;
+            transition: width 0.5s ease;
+            box-shadow: 0 0 8px rgba(37, 99, 235, 0.2);
+        }
+
+        /* Checkmark for completed state */
+        .load-card .lc-check {
+            display: none;
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+        }
+
+        .load-card.done .lc-check {
+            display: block;
+            animation: checkPop 0.3s ease;
+        }
+
+        .load-card.done .lc-check svg {
+            width: 100%;
+            height: 100%;
+            stroke: var(--green);
+            stroke-width: 2;
+            fill: none;
+        }
+
+        @keyframes checkPop {
+            0% {
+                transform: translateY(-50%) scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: translateY(-50%) scale(1.2);
+            }
+            100% {
+                transform: translateY(-50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Background progress effect */
+        .load-card .lc-bg-progress {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--blue-bg), transparent);
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+
+        .load-card.working {
+            border-color: var(--blue-border);
+            background: linear-gradient(135deg, var(--surface) 0%, rgba(37, 99, 235, 0.02) 100%);
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.08);
+        }
+
+        .load-card.working .lc-bg-progress {
+            left: 0;
+            opacity: 1;
+        }
+
+        .load-card.working .lc-icon {
+            opacity: 1;
+        }
+
+        .load-card.working .lc-icon svg {
+            stroke: var(--blue);
+        }
+
+        .load-card.working .lc-name {
+            color: var(--blue);
+            font-weight: 600;
+        }
+
+        .load-card.working .lc-status {
+            color: var(--text-secondary);
+        }
+
+        .load-card.done {
+            border-color: var(--green-border);
+            background: linear-gradient(135deg, var(--surface) 0%, rgba(22, 163, 74, 0.02) 100%);
+            box-shadow: 0 2px 8px rgba(22, 163, 74, 0.08);
+        }
+
+        .load-card.done .lc-bg-progress {
+            background: var(--green-bg);
+            opacity: 1;
+        }
+
+        .load-card.done .lc-icon {
+            opacity: 1;
+        }
+
+        .load-card.done .lc-icon svg {
+            stroke: var(--green);
+        }
+
+        .load-card.done .lc-name {
+            color: var(--green);
+            font-weight: 600;
+        }
+
+        .load-card.done .lc-status {
+            color: var(--green);
+        }
+
+        .load-card.done .lc-progress-bar {
+            background: linear-gradient(90deg, var(--green) 0%, rgba(22, 163, 74, 0.8) 100%);
+            width: 100% !important;
+            box-shadow: 0 0 8px rgba(22, 163, 74, 0.2);
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Results */
+        .results-section {
+            display: none;
+            margin-top: 32px;
+        }
+
+        .results-section.active {
+            display: block;
+            animation: fadeUp 0.4s ease;
+        }
+
+        /* Headline card */
+        .headline-card {
+            background: var(--surface);
+            border: 1px solid var(--text-primary);
+            border-radius: 12px;
+            padding: 32px 28px;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .headline-card .hc-project {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-tertiary);
+            margin-bottom: 8px;
+        }
+
+        .headline-card .hc-summary {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .score-pill {
+            display: inline-block;
+            padding: 4px 16px;
+            border-radius: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .score-pill.high {
+            background: var(--green-bg);
+            color: var(--green);
+            border: 1px solid var(--green-border);
+        }
+
+        .score-pill.mid {
+            background: var(--yellow-bg);
+            color: var(--yellow);
+            border: 1px solid var(--yellow-border);
+        }
+
+        .score-pill.low {
+            background: var(--red-bg);
+            color: var(--red);
+            border: 1px solid var(--red-border);
+        }
+
+        .score-reasoning {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px 8px;
+            background: none;
+            border: none;
+            border-bottom: 2px solid transparent;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-tertiary);
+            cursor: pointer;
+            transition: all 150ms ease;
+            text-align: center;
+        }
+
+        .tab-btn:hover { color: var(--text-secondary); }
+        .tab-btn.active {
+            color: var(--text-primary);
+            border-bottom-color: var(--text-primary);
+        }
+
+        .tab-btn .tb-score {
+            display: block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+
+        .tab-btn .tb-score.high { color: var(--green); }
+        .tab-btn .tb-score.mid { color: var(--yellow); }
+        .tab-btn .tb-score.low { color: var(--red); }
+
+        /* Tab panels */
+        .tab-panel {
+            display: none;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            padding: 24px;
+        }
+
+        .tab-panel.active {
+            display: block;
+            animation: fadeUp 0.2s ease;
+        }
+
+        .field { margin-bottom: 20px; }
+        .field:last-child { margin-bottom: 0; }
+        .field-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+            color: var(--text-tertiary);
+            margin-bottom: 6px;
+        }
+
+        .field-value {
+            font-size: 14px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+
+        .field-value.callout {
+            padding: 12px 14px;
+            background: var(--orange-bg);
+            border: 1px solid var(--orange-border);
+            border-radius: 6px;
+            color: var(--text-primary);
+        }
+
+        .field-value.callout-blue {
+            padding: 12px 14px;
+            background: var(--blue-bg);
+            border: 1px solid var(--blue-border);
+            border-radius: 6px;
+            color: var(--text-primary);
+        }
+
+        .field-value.callout-green {
+            padding: 12px 14px;
+            background: var(--green-bg);
+            border: 1px solid var(--green-border);
+            border-radius: 6px;
+            color: var(--text-primary);
+        }
+
+        .field-value.callout-violet {
+            padding: 12px 14px;
+            background: var(--violet-bg);
+            border: 1px solid var(--violet-border);
+            border-radius: 6px;
+            color: var(--text-primary);
+        }
+
+        .field-value.callout-red {
+            padding: 12px 14px;
+            background: var(--red-bg);
+            border: 1px solid var(--red-border);
+            border-radius: 6px;
+            color: var(--text-primary);
+        }
+
+        /* Alternative cards */
+        .alt-card {
+            background: var(--surface-dim);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 14px;
+            margin-bottom: 8px;
+        }
+
+        .alt-card:last-child { margin-bottom: 0; }
+        .alt-card .alt-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+
+        .alt-card .alt-row {
+            font-size: 13px;
+            line-height: 1.5;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+
+        .alt-card .alt-row:last-child { margin-bottom: 0; }
+        .alt-label {
+            font-weight: 600;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .alt-label.good { color: var(--green); }
+        .alt-label.bad { color: var(--red); }
+
+        /* Feature tags */
+        .tag-row { display: flex; flex-wrap: wrap; gap: 6px; }
+        .tag {
+            display: inline-block;
+            padding: 3px 10px;
+            background: var(--surface-dim);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .tag.core {
+            background: var(--blue-bg);
+            border-color: var(--blue-border);
+            color: var(--blue);
+        }
+
+        .tag.expected {
+            background: var(--surface-dim);
+            border-color: var(--border);
+            color: var(--text-secondary);
+        }
+
+        .tag.nice-to-have {
+            background: var(--surface-dim);
+            border-color: var(--border-light);
+            color: var(--text-tertiary);
+        }
+
+        /* Validation signals */
+        .signal-row { display: flex; flex-wrap: wrap; gap: 6px; }
+        .signal {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .signal.found {
+            background: var(--green-bg);
+            border: 1px solid var(--green-border);
+            color: var(--green);
+        }
+
+        .signal.missing {
+            background: var(--red-bg);
+            border: 1px solid var(--red-border);
+            color: var(--red);
+        }
+
+        /* Verdict grid */
+        .verdict-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 24px;
+        }
+
+        .v-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 18px;
+            transition: box-shadow 150ms ease;
+        }
+
+        .v-card:hover { box-shadow: var(--shadow-sm); }
+        .v-card.full { grid-column: 1 / -1; }
+        .v-card .vc-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .v-card .vc-label.strength { color: var(--green); }
+        .v-card .vc-label.blind { color: var(--orange); }
+        .v-card .vc-label.action { color: var(--blue); }
+        .v-card .vc-label.question { color: var(--violet); }
+        .v-card .vc-label.works { color: var(--green); }
+        .v-card .vc-label.risk { color: var(--red); }
+        .v-card .vc-value {
+            font-size: 14px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+
+        .v-card.question-card {
+            background: var(--violet-bg);
+            border-color: var(--violet-border);
+        }
+
+        .v-card.question-card .vc-value {
+            font-family: 'Newsreader', serif;
+            font-style: italic;
+            font-size: 16px;
+            color: var(--text-primary);
+        }
+
+        .risk-item { margin-bottom: 10px; }
+        .risk-item:last-child { margin-bottom: 0; }
+        .risk-scenario {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .risk-consequence {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        .works-item {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border-light);
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        .works-item:last-child { border-bottom: none; }
+
+        /* CTA */
+        .cta-card {
+            margin-top: 24px;
+            padding: 28px;
+            text-align: center;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        .cta-card p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+
+        .cta-link {
+            display: inline-block;
+            padding: 10px 24px;
+            background: var(--text-primary);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 150ms ease;
+        }
+
+        .cta-link:hover { background: #333; }
+
+        .retry-btn {
+            display: block;
+            width: 100%;
+            margin-top: 12px;
+            padding: 12px;
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+            color: var(--text-tertiary);
+            cursor: pointer;
+        }
+
+        .retry-btn:hover {
+            border-color: var(--text-tertiary);
+            color: var(--text-secondary);
+        }
+
+        /* How section */
+        .how-section { margin-top: 48px; }
+        .how-title {
+            font-family: 'Newsreader', serif;
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .how-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .how-card {
+            padding: 16px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+        }
+
+        .how-card .how-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--text-tertiary);
+            margin-bottom: 6px;
+        }
+
+        .how-card .how-text {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* Mobile */
+        @media (max-width: 600px) {
+            nav { padding: 0 1.5rem; }
+            .container { padding: 64px 16px 80px; }
+            .loading-grid { grid-template-columns: 1fr; }
+            .verdict-grid { grid-template-columns: 1fr; }
+            .how-grid { grid-template-columns: 1fr; }
+            .headline-card { padding: 24px 20px; }
+            .tab-btn { font-size: 12px; padding: 10px 4px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">
+            <div class="logo-mark">b.</div>
+            <span class="logo-text">banast</span>
+        </a>
+        <a href="index.html" class="nav-back">← Back to Banast</a>
+    </nav>
+
+    <div class="container">
+
+        <h1>3 AI experts analyze your project<br>in 90 seconds.</h1>
+        <p class="subtitle">
+            Paste your landing page URL. Problem, offer, acquisition — we answer the questions you're afraid to ask. Free.
+        </p>
+
+        <!-- Form -->
+        <div class="form-card">
+            <form id="auditForm">
+                <div class="form-group">
+                    <label for="urlInput">Your project URL</label>
+                    <input type="url" id="urlInput" placeholder="https://myproject.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="emailInput">Your email</label>
+                    <input type="email" id="emailInput" placeholder="you@email.com" required>
+                </div>
+                <button type="submit" class="submit-btn" id="submitBtn">Launch audit →</button>
+                <p class="disclaimer">Free · No card required · Results in ~90 sec</p>
+            </form>
+        </div>
+
+        <div class="error-msg" id="errorMsg"></div>
+
+        <!-- Loading -->
+        <div class="loading-section" id="loadingSection">
+            <div class="loading-grid">
+                <div class="load-card" id="loadProblem">
+                    <div class="lc-bg-progress"></div>
+                    <div class="lc-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                    </div>
+                    <div class="lc-name">Problem Analysis</div>
+                    <div class="lc-status">waiting</div>
+                    <div class="lc-progress">
+                        <div class="lc-progress-bar"></div>
+                    </div>
+                    <div class="lc-check">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                    </div>
+                </div>
+                <div class="load-card" id="loadOffer">
+                    <div class="lc-bg-progress"></div>
+                    <div class="lc-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"></path>
+                        </svg>
+                    </div>
+                    <div class="lc-name">Offer Evaluation</div>
+                    <div class="lc-status">waiting</div>
+                    <div class="lc-progress">
+                        <div class="lc-progress-bar"></div>
+                    </div>
+                    <div class="lc-check">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                    </div>
+                </div>
+                <div class="load-card" id="loadGrowth">
+                    <div class="lc-bg-progress"></div>
+                    <div class="lc-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M3 13h2v7H3zM8 9h2v11H8zM13 5h2v15h-2zM18 3h2v17h-2z"></path>
+                        </svg>
+                    </div>
+                    <div class="lc-name">Growth Strategy</div>
+                    <div class="lc-status">waiting</div>
+                    <div class="lc-progress">
+                        <div class="lc-progress-bar"></div>
+                    </div>
+                    <div class="lc-check">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                    </div>
+                </div>
+                <div class="load-card" id="loadVerdict">
+                    <div class="lc-bg-progress"></div>
+                    <div class="lc-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                        </svg>
+                    </div>
+                    <div class="lc-name">Final Verdict</div>
+                    <div class="lc-status">waiting</div>
+                    <div class="lc-progress">
+                        <div class="lc-progress-bar"></div>
+                    </div>
+                    <div class="lc-check">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results -->
+        <div class="results-section" id="resultsSection">
+
+            <!-- Headline -->
+            <div class="headline-card">
+                <div class="hc-project" id="resProjectName"></div>
+                <div class="hc-summary" id="resSummary"></div>
+                <div class="score-pill" id="resScoreGlobal"></div>
+                <div class="score-reasoning" id="resScoreReasoning"></div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab('problem', this)">
+                    <span class="tb-score" id="tabScoreProblem">—</span>
+                    Problem
+                </button>
+                <button class="tab-btn" onclick="switchTab('offer', this)">
+                    <span class="tb-score" id="tabScoreOffer">—</span>
+                    Offer
+                </button>
+                <button class="tab-btn" onclick="switchTab('growth', this)">
+                    <span class="tb-score" id="tabScoreGrowth">—</span>
+                    Acquisition
+                </button>
+            </div>
+
+            <!-- Problem & Market panel -->
+            <div class="tab-panel active" id="panel-problem">
+                <div class="field">
+                    <div class="field-label">Problem detected</div>
+                    <div class="field-value" id="resProblem"></div>
+                </div>
+                <div class="field">
+                    <div class="field-label">Who has this problem?</div>
+                    <div class="field-value" id="resWho"></div>
+                </div>
+                <div class="field">
+                    <div class="field-label">Pain level</div>
+                    <div class="field-value callout" id="resPainLevel"></div>
+                </div>
+                <div class="field">
+                    <div class="field-label">Current alternatives</div>
+                    <div id="resAlternatives"></div>
+                </div>
+                <div class="field">
+                    <div class="field-label">Switching trigger</div>
+                    <div class="field-value callout-blue" id="resSwitchTrigger"></div>
+                </div>
+                <div class="field">
+                    <div class="field-label">Validation signals</div>
+                    <div class="signal-row" id="resSignals"></div>
+                </div>
+            </div>
+
+            <!-- Offer & Differentiation panel -->
+            <div class="tab-panel" id="panel-offer">
+                <div class="field">
+                    <div class="field-label">What the product actually does</div>
+                    <div class="field-value" id="resProductDoes"></div>
+                </div>
+                <div class="field">
+                    <div class="field-label">Features detected</div>
+                    <div class="tag-row" id="resFeatures"></div>
+                </div>
+                <div class="field">
+                    <div class="field-label">Killer feature</div>
+                    <div class="field-value callout-green" id="resKillerFeature"></div>
+                </div>
+                <div class="field">
+                    <div class="field-label">⚠️ Feature trap</div>
+                    <div class="field-value callout-red" id="resFeatureTrap"></div>
+                </div>
+                <div class="field">
+                    <div class="field-label">Pricing analysis</div>
+                    <div class="field-value" id="resPricing"></div>
+                </div>
+                <div class="field">
+                    <div class="field-label">Why choose this over nothing?</div>
+                    <div class="field-value callout-blue" id="resWhyThis"></div>
+                </div>
+            </div>
+
+            <!-- Growth & First Users panel -->
+            <div class="tab-panel" id="panel-growth">
+                <div class="field">
+                    <div class="field-label">Your ideal first user</div>
+                    <div class="field-value" id="resFirstUser"></div>
+                </div>
+                <div class="field">
+                    <div class="field-label">Where to find them</div>
+                    <div class="field-value callout-blue" id="resWhereHangOut"></div>
+                </div>
+                <div class="field">
+                    <div class="field-label">Hook message</div>
+                    <div class="field-value callout-violet" id="resHook" style="font-family: 'Newsreader', serif; font-style: italic; font-size: 16px;"></div>
+                </div>
+                <div class="field">
+                    <div class="field-label">What blocks conversion</div>
+                    <div class="field-value callout" id="resBlocker"></div>
+                </div>
+                <div class="field">
+                    <div class="field-label">Playbook: 10 users this week</div>
+                    <div class="field-value callout-green" id="resPlaybook"></div>
+                </div>
+                <div class="field">
+                    <div class="field-label">Growth model</div>
+                    <div class="field-value" id="resGrowthModel"></div>
+                </div>
+            </div>
+
+            <!-- Verdict cards -->
+            <div class="verdict-grid">
+                <div class="v-card">
+                    <div class="vc-label strength">✦ Biggest strength</div>
+                    <div class="vc-value" id="resStrength"></div>
+                </div>
+                <div class="v-card">
+                    <div class="vc-label blind">✦ Blind spot</div>
+                    <div class="vc-value" id="resBlindSpot"></div>
+                </div>
+                <div class="v-card full">
+                    <div class="vc-label action">→ Next move (doable in 2h)</div>
+                    <div class="vc-value" id="resNextMove"></div>
+                </div>
+                <div class="v-card question-card full">
+                    <div class="vc-label question">? The question to ask yourself</div>
+                    <div class="vc-value" id="resQuestion"></div>
+                </div>
+                <div class="v-card full">
+                    <div class="vc-label works">✓ What works well</div>
+                    <div id="resWhatWorks"></div>
+                </div>
+                <div class="v-card full">
+                    <div class="vc-label risk">⚠ Risks</div>
+                    <div id="resRisks"></div>
+                </div>
+            </div>
+
+            <!-- CTA -->
+            <div class="cta-card">
+                <p>This audit is just the surface.<br><strong>We can go much deeper.</strong></p>
+                <a href="https://calendar.app.google/3isUmY4WULonJUMY7" target="_blank" class="cta-link">Book a 15-min call →</a>
+            </div>
+
+            <button class="retry-btn" onclick="resetForm()">← Analyze another project</button>
+        </div>
+
+        <!-- How it works -->
+        <div class="how-section" id="howSection">
+            <div class="how-title">How it works</div>
+            <div class="how-grid">
+                <div class="how-card">
+                    <div class="how-num">01</div>
+                    <div class="how-text">You paste your landing page or app URL.</div>
+                </div>
+                <div class="how-card">
+                    <div class="how-num">02</div>
+                    <div class="how-text">3 AI agents analyze in parallel: problem, offer, acquisition.</div>
+                </div>
+                <div class="how-card">
+                    <div class="how-num">03</div>
+                    <div class="how-text">You get a complete diagnostic in 90 seconds. Free.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const WEBHOOK_URL = 'https://automation.lebonrecap.app/webhook/0fb04f58-c767-45c6-9d84-d15823a5f5fc';
+
+        const form = document.getElementById('auditForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const loadingSection = document.getElementById('loadingSection');
+        const resultsSection = document.getElementById('resultsSection');
+        const howSection = document.getElementById('howSection');
+        const errorMsg = document.getElementById('errorMsg');
+
+        const loadCards = {
+            problem: document.getElementById('loadProblem'),
+            offer: document.getElementById('loadOffer'),
+            growth: document.getElementById('loadGrowth'),
+            verdict: document.getElementById('loadVerdict'),
+        };
+
+        function setCard(key, state, text, progress) {
+            const card = loadCards[key];
+            card.className = 'load-card ' + state;
+            card.querySelector('.lc-status').textContent = text;
+
+            if (progress !== undefined) {
+                const progressBar = card.querySelector('.lc-progress-bar');
+                progressBar.style.width = progress + '%';
+            }
+        }
+
+        function animateProgressBar(key, baseDuration, startDelay = 0, variations = {}) {
+            const card = loadCards[key];
+            const progressBar = card.querySelector('.lc-progress-bar');
+
+            // Random variations for realistic feel
+            const speedVariation = variations.speed || (0.8 + Math.random() * 0.4); // 0.8 to 1.2
+            const finalDuration = baseDuration * speedVariation;
+
+            // Create stepped progress with random pauses
+            const steps = [
+                { progress: 15, time: 0.15 },
+                { progress: 35, time: 0.35 },
+                { progress: 50, time: 0.5 },
+                { progress: 70, time: 0.7 },
+                { progress: 85, time: 0.85 },
+                { progress: 95, time: 0.95 }
+            ];
+
+            setTimeout(() => {
+                let currentStep = 0;
+
+                const animateStep = () => {
+                    if (currentStep >= steps.length) {
+                        // Final completion
+                        setTimeout(() => {
+                            progressBar.style.transition = 'width 0.4s ease';
+                            progressBar.style.width = '100%';
+                        }, finalDuration * 0.05);
+                        return;
+                    }
+
+                    const step = steps[currentStep];
+                    const stepDuration = finalDuration * (currentStep === 0 ? step.time : (step.time - steps[currentStep - 1].time));
+
+                    // Add random micro-pauses for realism
+                    const pauseChance = Math.random();
+                    const pause = pauseChance > 0.7 ? Math.random() * 500 : 0;
+
+                    setTimeout(() => {
+                        progressBar.style.transition = `width ${stepDuration}ms ease-out`;
+                        progressBar.style.width = step.progress + '%';
+                        currentStep++;
+
+                        setTimeout(animateStep, stepDuration + pause);
+                    }, pause);
+                };
+
+                animateStep();
+            }, startDelay);
+
+            return finalDuration;
+        }
+
+        function animateLoading() {
+            // Total duration: 90 seconds
+            // First 3 agents work with different speeds
+
+            // Initialize all three first agents
+            setTimeout(() => {
+                setCard('problem', 'working', 'initializing...', 0);
+                setCard('offer', 'working', 'initializing...', 0);
+                setCard('growth', 'working', 'initializing...', 0);
+
+                // Start progress bars with different speeds
+                const problemDuration = animateProgressBar('problem', 24000, 500, { speed: 0.9 });
+                const offerDuration = animateProgressBar('offer', 24000, 800, { speed: 1.1 });
+                const growthDuration = animateProgressBar('growth', 24000, 600, { speed: 1.0 });
+
+                // Problem agent messages
+                setTimeout(() => setCard('problem', 'working', 'scraping page...', null), 2500);
+                setTimeout(() => setCard('problem', 'working', 'analyzing problem...', null), 8000);
+                setTimeout(() => setCard('problem', 'working', 'identifying pain points...', null), 15000);
+                setTimeout(() => setCard('problem', 'working', 'validating insights...', null), 20000);
+
+                // Offer agent messages (slightly different timing)
+                setTimeout(() => setCard('offer', 'working', 'scraping page...', null), 2800);
+                setTimeout(() => setCard('offer', 'working', 'detecting features...', null), 9500);
+                setTimeout(() => setCard('offer', 'working', 'analyzing pricing...', null), 16000);
+                setTimeout(() => setCard('offer', 'working', 'comparing alternatives...', null), 21000);
+
+                // Growth agent messages
+                setTimeout(() => setCard('growth', 'working', 'scraping page...', null), 2600);
+                setTimeout(() => setCard('growth', 'working', 'studying channels...', null), 8800);
+                setTimeout(() => setCard('growth', 'working', 'finding user profiles...', null), 15500);
+                setTimeout(() => setCard('growth', 'working', 'building playbook...', null), 20500);
+
+                // Complete them at slightly different times
+                setTimeout(() => setCard('problem', 'done', 'complete', 100), 22000);
+                setTimeout(() => setCard('growth', 'done', 'complete', 100), 24500);
+                setTimeout(() => setCard('offer', 'done', 'complete', 100), 26500);
+            }, 500);
+
+            // Start verdict after all complete
+            setTimeout(() => {
+                setCard('verdict', 'working', 'synthesizing results...', 0);
+
+                // Verdict progresses but never completes - stays at ~85%
+                const verdictSteps = [
+                    { progress: 20, delay: 2000 },
+                    { progress: 40, delay: 5000 },
+                    { progress: 60, delay: 8000 },
+                    { progress: 75, delay: 11000 },
+                    { progress: 85, delay: 14000 }  // Stops here, doesn't reach 100%
+                ];
+
+                const verdictBar = loadCards.verdict.querySelector('.lc-progress-bar');
+
+                verdictSteps.forEach(step => {
+                    setTimeout(() => {
+                        verdictBar.style.transition = 'width 1.5s ease-out';
+                        verdictBar.style.width = step.progress + '%';
+                    }, step.delay);
+                });
+
+                setTimeout(() => setCard('verdict', 'working', 'generating insights...', null), 5000);
+                setTimeout(() => setCard('verdict', 'working', 'creating recommendations...', null), 9000);
+                setTimeout(() => setCard('verdict', 'working', 'finalizing report...', null), 13000);
+
+                // Keep it in "finalizing" state - never completes
+            }, 27500);
+        }
+
+        function switchTab(name, btn) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById('panel-' + name).classList.add('active');
+        }
+
+        function sc(score) {
+            if (score >= 7) return 'high';
+            if (score >= 4) return 'mid';
+            return 'low';
+        }
+
+        function displayResults(data) {
+            // Complete the verdict animation when showing results
+            setCard('verdict', 'done', 'ready', 100);
+
+            // Small delay for visual feedback before showing results
+            setTimeout(() => {
+                loadingSection.classList.remove('active');
+                howSection.style.display = 'none';
+                resultsSection.classList.add('active');
+
+                const v = data.verdict || {};
+                const pm = data.problem_and_market || data.agent1 || {};
+                const od = data.offer_and_differentiation || data.agent2 || {};
+                const gfu = data.growth_and_first_users || data.agent3 || {};
+
+                // === Headline ===
+                document.getElementById('resProjectName').textContent = v.project_name || 'Project';
+                document.getElementById('resSummary').textContent = v.one_line_summary || '';
+
+                const globalScore = v.confidence_score?.score || 0;
+                const sg = document.getElementById('resScoreGlobal');
+                sg.textContent = globalScore + ' / 10';
+                sg.className = 'score-pill ' + sc(globalScore);
+                document.getElementById('resScoreReasoning').textContent = v.confidence_score?.reasoning || '';
+
+                // === Tab scores ===
+                const ps = pm.score || 0;
+                const os = od.score || 0;
+                const gs = gfu.score || 0;
+
+                const tsP = document.getElementById('tabScoreProblem');
+                tsP.textContent = ps + '/10';
+                tsP.className = 'tb-score ' + sc(ps);
+
+                const tsO = document.getElementById('tabScoreOffer');
+                tsO.textContent = os + '/10';
+                tsO.className = 'tb-score ' + sc(os);
+
+                const tsG = document.getElementById('tabScoreGrowth');
+                tsG.textContent = gs + '/10';
+                tsG.className = 'tb-score ' + sc(gs);
+
+                // === Problem & Market ===
+                document.getElementById('resProblem').textContent = pm.problem_detected || '';
+                document.getElementById('resWho').textContent = pm.who_has_this_problem || '';
+
+                const painScore = pm.pain_level?.score || 0;
+                document.getElementById('resPainLevel').textContent =
+                    painScore + '/10 — ' + (pm.pain_level?.reasoning || '');
+
+                // Alternatives
+                const altContainer = document.getElementById('resAlternatives');
+                altContainer.innerHTML = '';
+                (pm.current_alternatives || []).forEach(alt => {
+                    const card = document.createElement('div');
+                    card.className = 'alt-card';
+                    card.innerHTML = `
+                        <div class="alt-name">${alt.alternative || ''}</div>
+                        <div class="alt-row"><span class="alt-label good">✓ Good enough:</span> ${alt.why_good_enough || ''}</div>
+                        <div class="alt-row"><span class="alt-label bad">✗ Not enough:</span> ${alt.why_not_enough || ''}</div>
+                    `;
+                    altContainer.appendChild(card);
+                });
+
+                document.getElementById('resSwitchTrigger').textContent = pm.switching_trigger || '';
+
+                // Signals
+                const signalContainer = document.getElementById('resSignals');
+                signalContainer.innerHTML = '';
+                (pm.validation_signals?.found || []).forEach(s => {
+                    const el = document.createElement('span');
+                    el.className = 'signal found';
+                    el.textContent = '✓ ' + s;
+                    signalContainer.appendChild(el);
+                });
+                (pm.validation_signals?.missing || []).forEach(s => {
+                    const el = document.createElement('span');
+                    el.className = 'signal missing';
+                    el.textContent = '✗ ' + s;
+                    signalContainer.appendChild(el);
+                });
+
+                // === Offer & Differentiation ===
+                document.getElementById('resProductDoes').textContent = od.product_does_what || '';
+
+                // Features with category tags
+                const featContainer = document.getElementById('resFeatures');
+                featContainer.innerHTML = '';
+                (od.features_detected || []).forEach(f => {
+                    const el = document.createElement('span');
+                    el.className = 'tag ' + (f.category || '');
+                    el.textContent = f.feature || f;
+                    featContainer.appendChild(el);
+                });
+
+                document.getElementById('resKillerFeature').textContent = od.killer_feature || '';
+
+                const trap = od.feature_trap || {};
+                document.getElementById('resFeatureTrap').textContent =
+                    (trap.feature ? trap.feature + ' — ' : '') + (trap.why_trap || '');
+
+                document.getElementById('resPricing').textContent = od.pricing_analysis || '';
+                document.getElementById('resWhyThis').textContent = od.why_this_not_status_quo || '';
+
+                // === Growth & First Users ===
+                document.getElementById('resFirstUser').textContent = gfu.first_ideal_user || '';
+                document.getElementById('resWhereHangOut').textContent = gfu.where_they_hang_out || '';
+                document.getElementById('resHook').textContent = '"' + (gfu.hook_message || '') + '"';
+                document.getElementById('resBlocker').textContent = gfu.conversion_blocker || '';
+                document.getElementById('resPlaybook').textContent = gfu.ten_users_playbook || '';
+
+                const gm = gfu.growth_model || {};
+                document.getElementById('resGrowthModel').textContent =
+                    (gm.type ? gm.type.toUpperCase() + ' — ' : '') + (gm.reasoning || '');
+
+                // === Verdict cards ===
+                document.getElementById('resStrength').textContent = v.biggest_strength || '';
+                document.getElementById('resBlindSpot').textContent = v.blind_spot || '';
+                document.getElementById('resNextMove').textContent = v.next_move || '';
+                document.getElementById('resQuestion').textContent = v.founder_question || '';
+
+                // What works
+                const worksContainer = document.getElementById('resWhatWorks');
+                worksContainer.innerHTML = '';
+                (v.what_works || []).forEach(w => {
+                    const el = document.createElement('div');
+                    el.className = 'works-item';
+                    el.textContent = w;
+                    worksContainer.appendChild(el);
+                });
+
+                // Risks
+                const risksContainer = document.getElementById('resRisks');
+                risksContainer.innerHTML = '';
+                (v.risks || []).forEach(r => {
+                    const el = document.createElement('div');
+                    el.className = 'risk-item';
+                    el.innerHTML = `
+                        <div class="risk-scenario">${r.scenario || ''}</div>
+                        <div class="risk-consequence">→ ${r.consequence || ''}</div>
+                    `;
+                    risksContainer.appendChild(el);
+                });
+
+                resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 500);
+        }
+
+        function resetForm() {
+            resultsSection.classList.remove('active');
+            loadingSection.classList.remove('active');
+            errorMsg.classList.remove('active');
+            howSection.style.display = '';
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Launch audit →';
+            Object.keys(loadCards).forEach(k => setCard(k, '', 'waiting'));
+            form.reset();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showError(msg) {
+            errorMsg.textContent = msg;
+            errorMsg.classList.add('active');
+            loadingSection.classList.remove('active');
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Launch audit →';
+        }
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const url = document.getElementById('urlInput').value.trim();
+            const email = document.getElementById('emailInput').value.trim();
+            if (!url || !email) return;
+
+            errorMsg.classList.remove('active');
+            resultsSection.classList.remove('active');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Analyzing...';
+            loadingSection.classList.add('active');
+            howSection.style.display = 'none';
+            animateLoading();
+
+            try {
+                const response = await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ url, email })
+                });
+
+                if (!response.ok) throw new Error('Server error (' + response.status + '). Please try again.');
+
+                const raw = await response.json();
+
+                let data;
+                if (Array.isArray(raw)) {
+                    data = {};
+                    raw.forEach(item => Object.assign(data, item));
+                } else {
+                    data = raw;
+                }
+
+                // Parse stringified JSON fields if needed
+                ['verdict', 'problem_and_market', 'offer_and_differentiation', 'growth_and_first_users', 'agent1', 'agent2', 'agent3'].forEach(key => {
+                    if (typeof data[key] === 'string') {
+                        try { data[key] = JSON.parse(data[key]); } catch(e) {}
+                    }
+                });
+
+                // Wait for the animation to complete (90 seconds total)
+                // We already have some delay from the animation start, so wait for the remaining time
+                setTimeout(() => {
+                    displayResults(data);
+                }, 45000); // 45 more seconds to reach ~90 seconds total
+            } catch (err) {
+                showError(err.message || 'An error occurred. Please try again.');
+            }
+        });
+    </script>
+</body>
+</html>

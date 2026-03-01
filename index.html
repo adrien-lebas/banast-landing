@@ -167,8 +167,30 @@
       animation: fadeUp 0.7s 0.6s forwards;
     }
 
+    .hero-cta-secondary {
+      display: inline-block;
+      margin-top: 1.5rem;
+      padding: 10px 24px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all var(--transition);
+      opacity: 0;
+      animation: fadeUp 0.7s 0.7s forwards;
+    }
+
+    .hero-cta-secondary:hover {
+      background: var(--hover);
+      border-color: var(--text-secondary);
+      color: var(--text-primary);
+    }
+
     .hero-scroll {
-      margin-top: 3.5rem;
+      margin-top: 2.5rem;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -984,6 +1006,20 @@
       gap: 6px;
     }
 
+    .cta-alternative {
+      display: inline-block;
+      margin-top: 1rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.88rem;
+      transition: all var(--transition);
+    }
+
+    .cta-alternative:hover {
+      color: var(--accent);
+      text-decoration: underline;
+    }
+
     .cta-trust {
       margin-top: 1.2rem;
       font-size: 0.72rem;
@@ -1085,13 +1121,14 @@
       <div class="logo-mark">b.</div>
       <span class="logo-text">banast</span>
     </a>
-    <a href="#demo" class="nav-cta">Access the demo</a>
+    <a href="free-audit.html" class="nav-cta">Test your landing page for free →</a>
   </nav>
 
   <section class="hero">
     <div class="hero-tag">Strategic OS for Vibe Coders</div>
     <h1>Build the <em>right</em> product,<br>not just the fast one.</h1>
     <p class="hero-sub">Banast helps tomorrow's founders structure their product vision before coding with AI.</p>
+    <a href="free-audit.html" class="hero-cta-secondary">Test your landing page for free →</a>
     <div class="hero-scroll">
       <span>Scroll</span>
       <div class="scroll-line"></div>
@@ -1297,6 +1334,7 @@
       <button type="submit">Access the demo →</button>
     </form>
     <div class="form-success" id="formSuccess">✓ Thanks! You'll receive your access very soon.</div>
+    <a href="free-audit.html" class="cta-alternative">Or test your landing page for free first →</a>
     <p class="cta-trust">No spam. Early access reserved for first subscribers.</p>
   </section>
 
