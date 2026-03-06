@@ -1187,7 +1187,9 @@
             <form id="auditForm">
                 <div class="form-group">
                     <label for="urlInput">Your project URL</label>
-                    <input type="url" id="urlInput" placeholder="https://myproject.com" required>
+                    <input type="text" id="urlInput" placeholder="myproject.com" required
+                           pattern="^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/.*)?$"
+                           title="Please enter a valid URL (e.g. myproject.com)">
                 </div>
                 <div class="form-group">
                     <label for="emailInput">Your email</label>
